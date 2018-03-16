@@ -1,23 +1,25 @@
+''' Input = at least (1) of the yearly CaBi csvs
+	Working file for exploring CaBi data and creating plots in seaborn.
+	For now, testing with 2010q4 data
+	Output = plots listed below
+'''
+
+# Daily Average/Median Member Type, annual median (1)
+# Daily Average/Median Member Type, annual mean (1)
+# Daily Average/Median Duration System and Regions, annual median (1)
+# Daily Average/Median Duration System and Regions, annual mean (1)
+# Daily Average/Median Duration DC to DC, Member Types (1)
+# Daily Average/Median Duration Member Type 2010-2017 (1)
+# Daily Average/Median Duration System and Regions 2010-2017 (1)
+
+# Generate station history index 
+# 	Get total stations per day count
+# 	Get list of retired stations that we'll need to account for with historical station info
+# Generate bike history index (deprioritize until DDOT data)
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import glob2
 
-#files = glob2.glob('C:/Users/slbau/CaBi//*.csv')
-
-#for file in files:
-
-# There's definitely a better way to do the below using glob and loops
-df1 = pd.read_csv(r'C:\Users\slbau\CaBi\CABI_Daily_Trips_20180315_191537_2010-q4.csv')
-df2 = pd.read_csv(r'C:\Users\slbau\CaBi\CABI_Daily_Trips_20180315_191537_2011-q1_2011-q2_2011-q3_2011-q4.csv')
-df3 = pd.read_csv(r'C:\Users\slbau\CaBi\CABI_Daily_Trips_20180315_191537_2012-q1_2012-q2_2012-q3_2012-q4.csv')
-df4 = pd.read_csv(r'C:\Users\slbau\CaBi\CABI_Daily_Trips_20180315_191537_2013-q1_2013-q2_2013-q3_2013-q4.csv')
-df5 = pd.read_csv(r'C:\Users\slbau\CaBi\CABI_Daily_Trips_20180315_191537_2014-q1_2014-q2_2014-q3_2014-q4.csv')
-df6 = pd.read_csv(r'C:\Users\slbau\CaBi\CABI_Daily_Trips_20180315_191537_2015-q1_2015-q2_2015-q3_2015-q4.csv')
-df7 = pd.read_csv(r'C:\Users\slbau\CaBi\CABI_Daily_Trips_20180315_191537_2016-q1_2016-q2_2016-q3_2016-q4.csv')
-df8 = pd.read_csv(r'C:\Users\slbau\CaBi\CABI_Daily_Trips_20180315_191537_2017-q1_2017-q2_2017-q3_2017-q4.csv')
-
-df = df1.append([df2, df3, df4, df5, df6, df7, df8])
-
-df[(df['region_start_end'] == 'WDC_to_WDC')]
+df1 = pd.read_csv('../Output/CABI_Daily_Trips_20180315_191537_2010-q4.csv')
