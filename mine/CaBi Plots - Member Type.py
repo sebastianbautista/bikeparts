@@ -1,26 +1,9 @@
-''' Input = at least (1) of the yearly CaBi csvs
-	Working file for exploring CaBi data and creating plots in seaborn.
-	For now, testing with 2010q4 data
-	Output = plots listed below
-'''
-
-# Daily Average/Median Member Type, annual median
-# Daily Average/Median Member Type, annual mean
-# Daily Average/Median Duration System and Regions, annual median
-# Daily Average/Median Duration System and Regions, annual mean
-# Daily Average/Median Duration DC to DC, Member Types
-# Daily Average/Median Duration Member Type 2010-2017
-# Daily Average/Median Duration System and Regions 2010-2017
-
-# Generate station history index 
-# 	Get total stations per day count
-# 	Get list of retired stations that we'll need to account for with historical station info
-# Generate bike history index (deprioritize until DDOT data)
-
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+# Daily Average/Median Member Type, annual median
+# Daily Average/Median Member Type, annual mean
 
 # load in yearly data 
 df0 = pd.read_csv(r'~/CaBi/Output/CABI_Daily_Trips_20180315_191537_2010-q4.csv')
@@ -32,9 +15,6 @@ df5 = pd.read_csv(r'~/CaBi/Output/CABI_Daily_Trips_20180315_191537_2015-q1_2015-
 df6 = pd.read_csv(r'~/CaBi/Output/CABI_Daily_Trips_20180315_191537_2016-q1_2016-q2_2016-q3_2016-q4.csv')
 df7 = pd.read_csv(r'~/CaBi/Output/CABI_Daily_Trips_20180315_191537_2017-q1_2017-q2_2017-q3_2017-q4.csv')
 
-dfs = [df0, df1, df2, df3, df4, df5, df6, df7]
-
-# annual mean and median, daily rides by member type
 year = pd.Series(range(2010,2018))
 casual_median = pd.Series()
 member_median = pd.Series()
@@ -81,39 +61,3 @@ plt.plot('year', 'member_mean', data=final,color='orange')
 plt.title('Median/Mean Rides per Year by Member Type')
 plt.legend()
 plt.show()
-
-# annual mean and median, ride duration for the entire system and by region
-
-system_mean_duration = pd.Series()
-system_med_duration = pd.Series()
-regional_mean_duration = pd.DataFrame()
-regional_med_duration = pd.DataFrame()
-
-def duration_calc(df):
-    system_mean = df['Minutes'].mean()
-    system_med = df['Minutes'].median()
-    regional_mean = df.groupby('region_start_end')['Minutes'].mean()
-    regional_med = df.groupby('region_start_end')['Minutes'].median()
-    return system_mean, system_med, regional_mean, regional_med
-
-system_mean0, system_med0, regional_mean0, regional_med0 = duration_calc(df0)
-system_mean1, system_med1, regional_mean1, regional_med1 = duration_calc(df1)
-system_mean2, system_med2, regional_mean2, regional_med2 = duration_calc(df2)
-system_mean3, system_med3, regional_mean3, regional_med3 = duration_calc(df3)
-system_mean4, system_med4, regional_mean4, regional_med4 = duration_calc(df4)
-system_mean5, system_med5, regional_mean5, regional_med5 = duration_calc(df5)
-system_mean6, system_med6, regional_mean6, regional_med6 = duration_calc(df6)
-system_mean7, system_med7, regional_mean7, regional_med7 = duration_calc(df7)
-
-# need to figure out how to append all of these
-
-'''
-trips_by_member = df0.groupby(['start_date', 'region_start_end', 'Member type']).size().unstack(level=[-2, -1]) # getting count and then unstacking to keep by day
-trips_by_member = pd.DataFrame(trips_by_member.to_records()).set_index('start_date') # cast to record then to df, then index to day
-trips_by_member.columns = [hdr.replace("('", "").replace("', '", "_").replace("')", "") for hdr in trips_by_member.columns] # rename headers?
-'''
-
-
-
-
-
