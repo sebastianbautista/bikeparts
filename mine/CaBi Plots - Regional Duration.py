@@ -1,6 +1,11 @@
+''' Should probably try to organize this into subplots.
+    As-is, saves 29 regional plots to a subfolder.
+    Output = multiple pngs of annual average duration by region
+'''
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import time
 
 # Daily Average/Median Duration System and Regions, annual median
 # Daily Average/Median Duration System and Regions, annual mean
@@ -53,6 +58,9 @@ for region in regions:
     plt.plot('year', 'Med_{}'.format(region), data=med_duration, color='blue')
     plt.title('Mean and median ride duration for {}'.format(region))
     plt.xlim(2010, 2017)
+    TIMESTR = time.strftime("%Y%m%d_%H%M%S")
+    filename = '../img/regional_duration/' + '{}_Avg_Annual_Duration_'.format(region) + TIMESTR + '.png'
+    plt.savefig(fname=filename)
     plt.show()
 
 '''

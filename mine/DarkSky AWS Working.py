@@ -14,7 +14,6 @@ database = "bikeshare"
 user = os.environ.get("AWS_READONLY_USER")
 password = os.environ.get("AWS_READONLY_PASS")
 
-
 # Connect to aws postgres DB
 conn = psycopg2.connect(host=host, user=user, port=port, password=password, database=database)
 cur = conn.cursor()
@@ -22,7 +21,8 @@ cur = conn.cursor()
 # Query 
 # dark_sky_raw = weather
 # cabi_trips = trips
-df = pd.read_sql("""SELECT * from cabi_trips LIMIT 10""", con=conn)
-
-print(df)
-print(df.dtypes)
+# as is, just pulls time, not datetime
+# also capitalization doesn't seem to be an issue - returns all lower case
+df = pd.read_sql("""SELECT
+TO_TIMESTAMP(apparentTemperatureHighTime)::timestamp as apparentTemperatureHighTime
+FROM dark_sky_raw;""", con=conn)

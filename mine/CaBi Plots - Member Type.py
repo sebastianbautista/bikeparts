@@ -1,6 +1,12 @@
+''' This is sloppy but it works so I'm not changing it.
+    The other CaBi plots scripts are much cleaner.
+    Output = .png file of line chart containing annual median/mean rides by member type
+'''
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import time
 
 # Daily Average/Median Member Type, annual median
 # Daily Average/Median Member Type, annual mean
@@ -48,9 +54,9 @@ casual_mean = pd.concat([casual_mean, casual_mean0, casual_mean1, casual_mean2,
 member_mean = pd.concat([member_mean, member_mean0, member_mean1, member_mean2, 
                            member_mean3, member_mean4, member_mean5, member_mean6, member_mean7], ignore_index=True)
 
-final = pd.DataFrame({'year': year, 'casual_median':casual_median, 
-                      'member_median':member_median, 'casual_mean':casual_mean,
-                      'member_mean':member_mean})
+final = pd.DataFrame({'year': year, 'casual_median': casual_median, 
+                      'member_median': member_median, 'casual_mean': casual_mean,
+                      'member_mean': member_mean})
 
 # plot
 sns.set_style('darkgrid')
@@ -60,4 +66,8 @@ plt.plot('year', 'casual_mean', data=final, linestyle='dashed', color='orange')
 plt.plot('year', 'member_mean', data=final,color='orange')
 plt.title('Median/Mean Rides per Year by Member Type')
 plt.legend()
+TIMESTR = time.strftime("%Y%m%d_%H%M%S")
+filename = '../img/' + 'Avg_Annual_Rides_By_Member_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()
+

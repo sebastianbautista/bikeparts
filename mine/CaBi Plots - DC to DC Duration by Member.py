@@ -1,6 +1,11 @@
+''' Graph isn't incredibly useful as-is; may want to switch to month-year instead of daily.
+    Output = png containing daily mean/median ride duration by member type, DC to DC only.
+'''
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import time
 
 # Daily Average/Median Duration DC to DC, Member Types
 
@@ -45,6 +50,9 @@ plt.plot('start_date', 'Med_Member', data=avg_duration, color='blue')
 plt.legend()
 plt.locator_params(axis='x', nbins=6)
 plt.title('Daily mean and median ride duration by member type, DC to DC')
+TIMESTR = time.strftime("%Y%m%d_%H%M%S")
+filename = '../img/' + 'Avg_Daily_Duration_by_Member_DC_to_DC_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()
 
 '''

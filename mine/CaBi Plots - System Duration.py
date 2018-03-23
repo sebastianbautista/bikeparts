@@ -1,6 +1,9 @@
+''' Output = systemwide average annual duration
+'''
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import time
 
 # Daily Average/Median Duration System and Regions, annual median
 # Daily Average/Median Duration System and Regions, annual mean
@@ -40,6 +43,9 @@ plt.plot('year', 'Mean_Duration_mins', data=average_annual_duration, color='oran
 plt.plot('year', 'Med_Duration_mins', data=average_annual_duration, color='blue')
 plt.legend()
 plt.title('System-wide mean and median annual ride duration, minutes')
+TIMESTR = time.strftime("%Y%m%d_%H%M%S")
+filename = '../img/' + 'Systemwide_Avg_Annual_Duration_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()
 
 ''' Daily average duration below

@@ -25,4 +25,4 @@ cur = conn.cursor()
 df = pd.read_sql("""SELECT * from cabi_trips LIMIT 10""", con=conn)
 
 print(df)
-print(df.dtypes)
+
