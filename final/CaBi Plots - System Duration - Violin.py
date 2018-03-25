@@ -3,7 +3,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns; sns.set_style('darkgrid')
 import time
 
-''' This script is meant to create violin plots for system-wide duration from daily rolled up (mean, median) CaBi data.
+''' This script is meant to create violin plots for system-wide duration from 
+    daily rolled up (mean, median) CaBi data.
+    WIP - still working on using mean/med as a hue.
+    Output = 4 pngs containing violin plots for systemwide mean/median duration
 '''
 
 # load in yearly data 
@@ -33,9 +36,7 @@ for df in dfs:
 
 # creating and merging dataframes for plotting
 mean_duration = pd.concat(mean_duration).reset_index(level=0).rename(columns={'Minutes': 'Mean_Duration_mins'})
-mean_duration['mean_dummy'] = 1
 med_duration = pd.concat(med_duration).reset_index(level=0).rename(columns={'Minutes': 'Med_Duration_mins'})
-med_duration['mean_dummy'] = 0
 avg_duration = mean_duration.merge(med_duration, how='outer', left_on='start_date', right_on='start_date')
 # pull out datetime stuff for graphing
 avg_duration['date'] = pd.to_datetime(avg_duration['start_date'])
@@ -56,22 +57,27 @@ TIMESTR = time.strftime('%Y%m%d_%H%M%S')
 # plot means by year
 sns.violinplot(x=avg_duration['year'], y=avg_duration['Mean_Duration_mins'])
 plt.title('System-wide CaBi mean annual ride duration, minutes')
+filename = '../img/' + 'Systemwide_Mean_Ride_Duration_by_Year_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()
 
 # plot medians by year
 sns.violinplot(x=avg_duration['year'], y=avg_duration['Med_Duration_mins'])
 plt.title('System-wide CaBi median annual ride duration, minutes')
+filename = '../img/' + 'Systemwide_Median_Ride_Duration_by_Year_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()
 
 # plot means by discrete month
 sns.violinplot(x=avg_duration['month'], y=avg_duration['Mean_Duration_mins'])
 plt.title('System-wide CaBi mean ride duration by month, minutes')
+filename = '../img/' + 'Systemwide_Mean_Ride_Duration_by_Month_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()
 
 # plot means by weekday
 sns.violinplot(x=avg_duration['weekday_name'], y=avg_duration['Mean_Duration_mins'])
 plt.title('System-wide CaBi mean ride duration by weekday, minutes')
+filename = '../img/' + 'Systemwide_Mean_Ride_Duration_by_Weekday_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()
-
-
-# need to implement savefig here

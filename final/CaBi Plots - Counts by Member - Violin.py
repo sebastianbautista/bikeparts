@@ -3,6 +3,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import time
 
+''' Output not done. Meant to be total ride counts by member.
+    Not 100% sure about the interpretation of the y-axis
+    Looks like width is count of days and y-value is # of rides on a single day
+    WIP - need to set up png names and output
+'''
+
 # Generate all counts by day
 
 # load in yearly data 
@@ -45,18 +51,25 @@ final['weekday'] = final['date'].dt.weekday
 final['weekday_name'] = final['date'].dt.weekday_name
 final['quarter'] = final['date'].dt.quarter
 
+TIMESTR = time.strftime('%Y%m%d_%H%M%S')
+
 # plot
 # total rides per month
 sns.violinplot(x=final['month'], y=final['Total'])
+plt.title('Total rides per month')
 plt.show()
 
-# total per quarter
+# total per weekday name
 sns.violinplot(x=final['weekday_name'], y=final['Total'])
+plt.title('Total rides per weekday name')
 plt.show()
 
-# casual and member per month
+# casual per month
 sns.violinplot(x=final['month'], y=final['Casual'])
+plt.title('Casual rides per month')
+plt.show()
+
+# member per month
 sns.violinplot(x=final['month'], y=final['Member'])
-
-
-TIMESTR = time.strftime('%Y%m%d_%H%M%S')
+plt.title('Member rides per month')
+plt.show()

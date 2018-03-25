@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-env_path = Path('~/git/Bikeshare-DC/') / '.env' 
+env_path = Path('~/git/Bikeshare-DC') / '.env' 
 load_dotenv(dotenv_path=env_path)
 
 host = "capstone-bikeshare.cs9te7lm3pt2.us-east-1.rds.amazonaws.com"

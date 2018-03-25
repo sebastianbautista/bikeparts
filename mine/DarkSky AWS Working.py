@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-env_path = Path('~/git/Bikeshare-DC/') / '.env' 
+env_path = Path('~/git/Bikeshare-DC') / '.env' 
 load_dotenv(dotenv_path=env_path)
 
 host = "capstone-bikeshare.cs9te7lm3pt2.us-east-1.rds.amazonaws.com"
@@ -23,6 +23,4 @@ cur = conn.cursor()
 # cabi_trips = trips
 # as is, just pulls time, not datetime
 # also capitalization doesn't seem to be an issue - returns all lower case
-df = pd.read_sql("""SELECT
-TO_TIMESTAMP(apparentTemperatureHighTime)::timestamp as apparentTemperatureHighTime
-FROM dark_sky_raw;""", con=conn)
+raw_df = pd.read_sql("""SELECT * FROM dark_sky_raw;""", con=conn)

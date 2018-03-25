@@ -1,12 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
+import seaborn as sns; sns.set_style('darkgrid')
 import time
 
-''' Graph isn't incredibly useful as-is; may want to switch to month-year instead of daily.
-    Output = png containing daily mean/median ride duration by member type, DC to DC only.
+''' Violin version of DC to DC duration by member
+    Output = 2 pngs containing violin plots for mean casual and member duration, DC to DC
+    Can easily add more plots to bottom
 '''
-
 
 # Daily Average/Median Duration DC to DC, Member Types
 
@@ -32,7 +32,6 @@ def daily_average_duration(df):
     median = daily_df['Minutes'].median()
     mean_duration.append(mean)
     med_duration.append(median)
-
 for df in dfs:
     daily_average_duration(df)
 
@@ -40,21 +39,32 @@ for df in dfs:
 mean_duration = pd.concat(mean_duration).unstack(level=-1).reset_index().rename(columns={'Casual': 'Mean_Casual','Member': 'Mean_Member'})
 med_duration = pd.concat(med_duration).unstack(level=-1).reset_index().rename(columns={'Casual': 'Med_Casual','Member': 'Med_Member'})
 avg_duration = mean_duration.merge(med_duration, on='start_date', how='inner').rename(columns={'index': 'start_date'})
+# datetime for plotting
+avg_duration['date'] = pd.to_datetime(avg_duration['start_date'])
+avg_duration['year'] = avg_duration['date'].dt.year 
+avg_duration['month'] = avg_duration['date'].dt.month
+avg_duration['weekday'] = avg_duration['date'].dt.weekday
+avg_duration['weekday_name'] = avg_duration['date'].dt.weekday_name
+avg_duration['quarter'] = avg_duration['date'].dt.quarter
 
-# plot
-# x axis being iffy with nbins
-sns.set_style('darkgrid')
-plt.plot('start_date', 'Mean_Casual', data=avg_duration, color='orange', linestyle='dashed')
-plt.plot('start_date', 'Med_Casual', data=avg_duration, color='blue', linestyle='dashed')
-plt.plot('start_date', 'Mean_Member', data=avg_duration, color='orange')
-plt.plot('start_date', 'Med_Member', data=avg_duration, color='blue')
-plt.legend()
-plt.locator_params(axis='x', nbins=6)
-plt.title('Daily mean and median ride duration by member type, DC to DC')
 TIMESTR = time.strftime("%Y%m%d_%H%M%S")
-filename = '../img/' + 'Avg_Daily_Duration_by_Member_DC_to_DC_' + TIMESTR + '.png'
+
+# plot mean casual by month
+sns.violinplot(x=avg_duration['month'], y=avg_duration['Mean_Casual'])
+plt.legend()
+plt.title('Mean ride duration by month, Casual, DC to DC')
+filename = '../img/' + 'Casual_Mean_Monthly_Duration_DC_to_DC_' + TIMESTR + '.png'
 plt.savefig(fname=filename)
 plt.show()
+
+# plot mean member by month
+sns.violinplot(x=avg_duration['month'], y=avg_duration['Mean_Member'])
+plt.legend()
+plt.title('Mean ride duration by month, Member, DC to DC')
+filename = '../img/' + 'Member_Mean_Monthly_Duration_DC_to_DC_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
+plt.show()
+
 
 '''
 # creating and merging dataframes for plotting
