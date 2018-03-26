@@ -1,12 +1,11 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-import time
+import seaborn as sns; sns.set_style('darkgrid')
+import time; TIMESTR = time.strftime('%Y%m%d_%H%M%S')
 
-''' Output not done. Meant to be total ride counts by member.
-    Not 100% sure about the interpretation of the y-axis
-    Looks like width is count of days and y-value is # of rides on a single day
-    WIP - need to set up png names and output
+''' Total daily ride counts by member.
+    Width is count of days and y-value is # of rides on a single day
+    Output = 4 pngs
 '''
 
 # Generate all counts by day
@@ -51,25 +50,31 @@ final['weekday'] = final['date'].dt.weekday
 final['weekday_name'] = final['date'].dt.weekday_name
 final['quarter'] = final['date'].dt.quarter
 
-TIMESTR = time.strftime('%Y%m%d_%H%M%S')
-
 # plot
 # total rides per month
 sns.violinplot(x=final['month'], y=final['Total'])
 plt.title('Total rides per month')
+filename = '../img/' + 'systemwide_total_rides_per_month_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()
 
 # total per weekday name
 sns.violinplot(x=final['weekday_name'], y=final['Total'])
 plt.title('Total rides per weekday name')
+filename = '../img/' + 'systemwide_total_rides_per_weekday_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()
 
 # casual per month
 sns.violinplot(x=final['month'], y=final['Casual'])
 plt.title('Casual rides per month')
+filename = '../img/' + 'casual_rides_per_month_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()
 
 # member per month
 sns.violinplot(x=final['month'], y=final['Member'])
 plt.title('Member rides per month')
+filename = '../img/' + 'member_rides_per_month_' + TIMESTR + '.png'
+plt.savefig(fname=filename)
 plt.show()

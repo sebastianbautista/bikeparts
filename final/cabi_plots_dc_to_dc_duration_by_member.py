@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns; sns.set_style('darkgrid')
-import time
+import time; TIMESTR = time.strftime("%Y%m%d_%H%M%S")
 
 ''' Violin version of DC to DC duration by member
     Output = 2 pngs containing violin plots for mean casual and member duration, DC to DC
@@ -47,13 +47,11 @@ avg_duration['weekday'] = avg_duration['date'].dt.weekday
 avg_duration['weekday_name'] = avg_duration['date'].dt.weekday_name
 avg_duration['quarter'] = avg_duration['date'].dt.quarter
 
-TIMESTR = time.strftime("%Y%m%d_%H%M%S")
-
 # plot mean casual by month
 sns.violinplot(x=avg_duration['month'], y=avg_duration['Mean_Casual'])
 plt.legend()
 plt.title('Mean ride duration by month, Casual, DC to DC')
-filename = '../img/' + 'Casual_Mean_Monthly_Duration_DC_to_DC_' + TIMESTR + '.png'
+filename = '../img/' + 'casual_mean_monthly_duration_dc_to_dc_' + TIMESTR + '.png'
 plt.savefig(fname=filename)
 plt.show()
 
@@ -61,7 +59,7 @@ plt.show()
 sns.violinplot(x=avg_duration['month'], y=avg_duration['Mean_Member'])
 plt.legend()
 plt.title('Mean ride duration by month, Member, DC to DC')
-filename = '../img/' + 'Member_Mean_Monthly_Duration_DC_to_DC_' + TIMESTR + '.png'
+filename = '../img/' + 'member_mean_monthly_duration_dc_to_dc_' + TIMESTR + '.png'
 plt.savefig(fname=filename)
 plt.show()
 
