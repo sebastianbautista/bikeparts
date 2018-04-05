@@ -1,9 +1,10 @@
 import os
-from pathlib import Path
 import time
+from pathlib import Path
 from dotenv import load_dotenv
 import pandas as pd
 import psycopg2
+
 
 ''' This script pulls and cleans all Dark Sky raw data from AWS.
     In progress - need to create weather_time dummies using 'summary' column.
@@ -57,5 +58,5 @@ df.drop(['apparenttemperaturemax', 'apparenttemperaturemaxtime',
 ### output as csv
 TIMESTR = time.strftime('%Y%m%d_%H%M%S')
 filename = "DarkSky_Clean_" + TIMESTR + ".csv"
-filepath = os.path.join("~/CaBi/", filename)
-#df.to_csv(filepath, index=True)
+filepath = os.path.join("~/CaBi/output", filename)
+df.to_csv(filepath, index=True)
