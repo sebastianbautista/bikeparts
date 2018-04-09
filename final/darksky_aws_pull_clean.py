@@ -59,4 +59,4 @@ df.drop(['apparenttemperaturemax', 'apparenttemperaturemaxtime',
 TIMESTR = time.strftime('%Y%m%d_%H%M%S')
 filename = "DarkSky_Clean_" + TIMESTR + ".csv"
 filepath = os.path.join("~/CaBi/output", filename)
-df.to_csv(filepath, index=True)
+#df.to_csv(filepath, index=True)
